@@ -2,8 +2,10 @@ Octue.com on Wagtail
 ====================
 
 [![Build Status](https://travis-ci.com/octue/planex-cms.svg?branch=master)](https://travis-ci.com/octue/planex-cms)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-This project is the backend element for octue.com. The [Front-end](https://github.com/octue/planex/) is built with Gatsby and consumes the CMS's content via GraphQL.
+This project is the backend CMS for [www.octue.com](https://www.octue.com). The [Front-end](https://github.com/octue/planex/) is built with Gatsby and consumes the CMS's content via GraphQL.
 
 Setup
 -----

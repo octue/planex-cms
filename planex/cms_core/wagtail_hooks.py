@@ -1,0 +1,29 @@
+from django.core.files.storage import get_storage_class
+from django.shortcuts import redirect
+from django.utils.cache import add_never_cache_headers
+from storages.backends.s3boto3 import S3Boto3Storage
+from wagtail.core import hooks
+from wagtail.documents import get_document_model
+from wagtail.documents.models import document_served
+
+
+@hooks.register("before_serve_document", order=100)
+def serve_document_from_s3(document, request):
+    """ Wagtail hook to direct users to download documents from their django-storages location
+    """
+    # TODO adapt for other cloud providers too
+    # Skip this hook if not using django-storages boto3 backend
+    if not issubclass(get_storage_class(), S3Boto3Storage):
+        return
+
+    # Send document_served signal
+    document_served.send(sender=get_document_model(), instance=document, request=request)
+
+    # Get direct S3 link
+    file_url = document.file.url
+
+    # Generate redirect response and add never_cache headers
+    response = redirect(file_url)
+    del response["Cache-control"]
+    add_never_cache_headers(response)
+    return response

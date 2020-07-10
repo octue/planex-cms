@@ -1,0 +1,121 @@
+version: '3'
+
+services:
+  web: &django
+    image: octue/planex
+    container_name: planex_web
+    build:
+        context: .
+        dockerfile: ./compose/local/django/Dockerfile
+    command: /start
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=planex.settings.local
+      - DJANGO_READ_DOT_ENV_FILE=0  # Set to off because we don't want our env vars baked into images
+      - DATABASE_URL=postgres://postgres_user:postgres_password@db/postgres_db
+      - REDIS_URL=redis://:redis_password@redis:6379
+      - CELERY_FLOWER_USER=flower_user
+      - CELERY_FLOWER_PASSWORD=flower_password
+    env_file:
+      - ./.env
+
+  db:
+    image: kartoza/postgis:12.1
+    container_name: planex_db
+    environment:
+      - POSTGRES_DB=postgres_db
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  pgadmin:  # Visit localhost:5050 to use the pgadmin tool (host: 'db', user and password as above for db container)
+    image: dpage/pgadmin4
+    container_name: planex_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+       - pgadmin_data:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  redis:
+    image: 'docker.io/bitnami/redis:6.0-debian-10'
+    environment:
+      - REDIS_PASSWORD=redis_password  # ALLOW_EMPTY_PASSWORD=yes is recommended only for development. And maybe not even then.
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/bitnami/redis/data
+    container_name: planex_redis
+
+  celeryworker:
+    <<: *django
+    image: octue/planex_celeryworker
+    container_name: planex_celeryworker
+    depends_on:
+      - redis
+      - db
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: octue/planex_celerybeat
+    container_name: planex_celerybeat
+    depends_on:
+      - redis
+      - db
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: octue/planex_flower
+    container_name: planex_flower
+    ports:
+      - 5555:5555
+    command: /start-flower
+
+#  node:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/node/Dockerfile
+#    image: octue/planex_node
+#    container_name: planex_node
+#    depends_on:
+#      - web
+#    stdin_open: true  # Temp workaround of https://github.com/facebook/create-react-app/issues/8688 so that the development server doesn't exit
+#    environment:
+#      - NODE_ENV=development
+#      - NODE_OPTIONS="--max-old-space-size=8192"  # Workaround out of memory errors when building javascript https://github.com/webpack/webpack-sources/issues/66
+#    volumes:
+#      - .:/app
+##      - nodemodules:/app/node_modules  # http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
+#    command: npm run start
+#    ports:
+#      - 3000:3000
+#      - 3001:3001  # Expose browsersync UI: https://www.browsersync.io/docs/options/#option-ui
+
+volumes:
+#  nodemodules:
+#    driver: local
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local

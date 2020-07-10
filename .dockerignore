@@ -1,0 +1,24 @@
+# System, cache and editor files
+**/__pycache__
+**/.DS_Store
+.editorconfig
+.idea
+app.json
+Procfile
+README.md
+setup.cfg
+
+# Never bake in environment variables
+.env
+.env*
+
+# Don't bake in compose data and scripts (scripts are copied to appropriate destinations)
+compose/data
+
+# Build JS in the image, don't use any local installs present
+build
+node_modules
+
+# Don't bake django static or media files into the image, these will be collected properly
+static_files
+media_files

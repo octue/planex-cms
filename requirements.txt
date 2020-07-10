@@ -1,0 +1,2 @@
+# Heroku forces you to use requirements.txt, include what we need to test on HerokuCI and deploy to heroku here
+-r requirements-local.txt

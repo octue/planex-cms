@@ -1,0 +1,62 @@
+
+
+# DEVOPS & DRIVERS
+# ----------------
+brotlipy # For improved whitenoise performance
+celery==4.4.6  # pyup: < 5.0  # https://github.com/celery/celery
+codecov==2.0.15
+ConcurrentLogHandler==0.9.1
+flower==0.9.4  # https://github.com/mher/flower
+gunicorn==19.9.0  # https://github.com/benoitc/gunicorn
+hiredis==1.0.1  # https://github.com/redis/hiredis-py
+kombu==4.6.11
+kombu-fernet-serializers==0.0.5
+psycopg2==2.8.5 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
+raven==6.9.0
+redis==3.5.0  # https://github.com/andymccurdy/redis-py
+setuptools==40.6.2
+uvicorn==0.11.5  # https://github.com/encode/uvicorn
+whitenoise==5.0.1  # https://github.com/evansd/whitenoise
+
+
+# INTEGRATIONS
+# ------------
+hubspot3==3.2.50
+coralogix-logger==2.0.2
+embedly==0.5.0
+
+
+# APPLICATION
+# -----------
+
+# cython==0.29.15 # required prior to installation of graphql
+# django-graphiql==0.4.4
+#
+# graphene==0.7.3
+graphql-core==2.2.1
+# graphql-django-view==1.1.0
+# graphql-relay==0.3.3
+argon2-cffi==18.3.0 # For password hashing
+boto3==1.7.82
+click>=7.1.2,<8
+django==2.2.14  # wagtail-grapple==0.5.1: <2.3, pyup: < 3.1
+django-anymail==7.0.0
+django-cors-headers==3.3.0
+django-environ==0.4.5
+django-extensions==2.1.6  # https://github.com/django-extensions/django-extensions
+django-fontawesome-5>=1.0,<2.0
+django-phonenumber-field==2.1.0
+django-redis==4.12.1
+django-storages==1.9.1
+graphene_django==2.7.1
+phonenumbers==8.10.3
+Pillow==6.2.2
+Pygments==2.5.2 # for code highlighting in wagtail-markdown
+requests==2.21.0  # 2.21.0 required by coralogix-logger v2.0.2 - see https://github.com/coralogix/python-coralogix-sdk/issues/7
+wagtail<2.9,>=2.5
+wagtail-django-recaptcha==1.0
+wagtail-markdown==0.6
+wagtail-grapple==0.5.1
+wagtailfontawesome==1.2.1
+wagtailmenus==3.0.1
+wagtailnetlify==0.2
