@@ -20,10 +20,10 @@ repos:
         args: ['--line-length', '160']
         language_version: python3
 
-#  - repo: https://gitlab.com/pycqa/flake8
-#    rev: 3.8.1
-#    hooks:
-#      - id: flake8
-#        args: ['--config=setup.cfg']
-#        additional_dependencies: [flake8-isort]
-#        language_version: python3
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.1
+    hooks:
+      - id: flake8
+        args: ['--config=setup.cfg']
+        additional_dependencies: [flake8-isort]
+        language_version: python3
