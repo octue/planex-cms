@@ -83,7 +83,7 @@ def test(args):
     Individual tests or classes can be specified as an argument, e.g.
      plx test test.test_users.UsersTestCase runs all tests in the UsersTestCase class.
     """
-    test_spec = " ".join(args) if len(args) >= 1 else "backend/test"
+    test_spec = " ".join(args) if len(args) >= 1 else "planex/test"
     system(f"docker-compose run web python manage.py test {test_spec}")
 
 
