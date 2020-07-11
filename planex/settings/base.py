@@ -1,8 +1,8 @@
-import os, sys, environ
-import whitenoise
-from datetime import timedelta
-from urllib.parse import urlparse
+import os
+import environ
 from corsheaders.defaults import default_headers
+
+import sys
 
 
 # DIRECTORIES AND ENVIRONMENT
@@ -36,7 +36,16 @@ if READ_DOT_ENV_FILE:
 
 # APP CONFIGURATION
 
-ALLOWED_HOSTS = ["localhost", ".localhost", "0.0.0.0", "127.0.0.1", "octue.dev", ".octue.dev", "octue.com", ".octue.com"]
+ALLOWED_HOSTS = [
+    "localhost",
+    ".localhost",
+    "0.0.0.0",
+    "127.0.0.1",
+    "octue.dev",
+    ".octue.dev",
+    "octue.com",
+    ".octue.com",
+]
 
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
@@ -108,7 +117,11 @@ MIDDLEWARE = [
 # CORS CONFIGURATION
 
 CORS_URLS_REGEX = r"^(\/graphql\/.*)|(\/review\/api\/.*)$"
-CORS_ORIGIN_WHITELIST = ["https://www.octue.com", "https://octue-production.netlify.com", "https://octue-staging.netlify.com"]
+CORS_ORIGIN_WHITELIST = [
+    "https://www.octue.com",
+    "https://octue-production.netlify.com",
+    "https://octue-staging.netlify.com",
+]
 CORS_ALLOW_HEADERS = default_headers + ("x-review-token",)
 
 
@@ -184,9 +197,14 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # Do not use the same Redis instance for other things like Celery!
 if "REDIS_URL" in env:
-    CACHES = {"default": {"BACKEND": "django_redis.cache.RedisCache", "LOCATION": env.url("REDIS_URL", default="redis://:redis_password@redis:6379"),}}
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": env.url("REDIS_URL", default="redis://:redis_password@redis:6379"),
+        }
+    }
 else:
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.db.DatabaseCache", "LOCATION": "database_cache",}}
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.db.DatabaseCache", "LOCATION": "database_cache"}}
 
 
 # INTERNATIONALISATION
@@ -208,7 +226,7 @@ USE_TZ = True
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(APP_DIR, "templates"),],
+        "DIRS": [os.path.join(APP_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -271,10 +289,10 @@ PASSWORD_HASHERS = [
 ]
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
@@ -304,7 +322,7 @@ if "PREVIEW_URL" in env:
 
 # Search
 WAGTAILSEARCH_BACKENDS = {
-    "default": {"BACKEND": "wagtail.contrib.postgres_search.backend",},
+    "default": {"BACKEND": "wagtail.contrib.postgres_search.backend"},
 }
 
 WAGTAIL_SITE_NAME = "planex"

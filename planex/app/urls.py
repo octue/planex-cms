@@ -5,7 +5,6 @@ from django.http import HttpResponseNotFound
 from django.urls import include, path
 from django.views.decorators.cache import never_cache
 from django.views.decorators.vary import vary_on_headers
-
 from grapple import urls as grapple_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
@@ -18,6 +17,7 @@ from cms_core import urls as core_urls
 from cms_core.utils.cache import get_default_cache_control_decorator
 from cms_core.views import robots
 
+
 # from site import urls as site_urls
 
 private_urlpatterns = [
@@ -25,7 +25,7 @@ private_urlpatterns = [
     path("admin/cms", include(wagtailadmin_urls)),
 ]
 
-private_urlpatterns += decorate_urlpatterns([path("documents/", include(wagtaildocs_urls)),], never_cache)
+private_urlpatterns += decorate_urlpatterns([path("documents/", include(wagtaildocs_urls))], never_cache)
 
 urlpatterns = [
     path("sitemap.xml", sitemap),
@@ -63,15 +63,17 @@ urlpatterns = decorate_urlpatterns(urlpatterns, get_default_cache_control_decora
 # Set vary header to instruct cache to serve different version on different
 # cookies, different request method (e.g. AJAX) and different protocol
 # (http vs https)
-urlpatterns = decorate_urlpatterns(urlpatterns, vary_on_headers("Cookie", "X-Requested-With", "X-Forwarded-Proto", "Accept-Encoding",))
+urlpatterns = decorate_urlpatterns(
+    urlpatterns, vary_on_headers("Cookie", "X-Requested-With", "X-Forwarded-Proto", "Accept-Encoding",)
+)
 
 Page.serve = get_default_cache_control_decorator()(Page.serve)
 
 # Join private and public URLs
 urlpatterns = (
     private_urlpatterns
-    + urlpatterns
-    + decorate_urlpatterns(
+    + urlpatterns  # noqa: W503
+    + decorate_urlpatterns(  # noqa: W503
         [
             # Wagtail paths have to be enabled for the administration interface to work
             # properly. This allows them to be visited only by the logged-in users to

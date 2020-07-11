@@ -1,11 +1,18 @@
-from wagtail.core.blocks import StreamBlock, StructBlock, CharBlock, TextBlock, URLBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.core.blocks import CharBlock, StreamBlock, StructBlock, TextBlock, URLBlock
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.blocks import ImageChooserBlock
+
 from .base import SectionBlock
 
 
 class HeroSectionBlock(SectionBlock):
-    heading = CharBlock(required=False, max_length=100, label="Hero Heading", help_text="Add the big hero text. Keep it snappy.", default="We are heroes")
+    heading = CharBlock(
+        required=False,
+        max_length=100,
+        label="Hero Heading",
+        help_text="Add the big hero text. Keep it snappy.",
+        default="We are heroes",
+    )
     description = TextBlock(
         required=False,
         max_length=400,
@@ -19,7 +26,10 @@ class HeroSectionBlock(SectionBlock):
             (
                 "button",
                 StructBlock(
-                    [("text", CharBlock(required=False, max_length=80, label="Label")), ("url", URLBlock(required=False, label="URL")),],
+                    [
+                        ("text", CharBlock(required=False, max_length=80, label="Label")),
+                        ("url", URLBlock(required=False, label="URL")),
+                    ],
                     required=False,
                     label="Call to action",
                     help_text='A "call-to-action" button, like "Sign Up Now!"',
@@ -29,7 +39,7 @@ class HeroSectionBlock(SectionBlock):
             (
                 "quote",
                 StructBlock(
-                    [("text", TextBlock()), ("author", CharBlock(required=False)),],
+                    [("text", TextBlock()), ("author", CharBlock(required=False))],
                     required=False,
                     label="Quote",
                     help_text="An inspiring quotation, optionally attributed to someone",

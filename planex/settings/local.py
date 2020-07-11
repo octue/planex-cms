@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # noqa: F403
 
 
 # DIRECTORIES AND ENVIRONMENT
@@ -93,14 +93,16 @@ TESTING = env.bool("TESTING", default=True)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "WARNING", "handlers": ["console",],},
-    "formatters": {"verbose": {"format": "%(levelname)s \t%(asctime)s %(module)s \t" "%(process)d %(thread)d \t%(message)s"},},
+    "root": {"level": "WARNING", "handlers": ["console"]},
+    "formatters": {
+        "verbose": {"format": "%(levelname)s \t%(asctime)s %(module)s \t" "%(process)d %(thread)d \t%(message)s"}
+    },
     "handlers": {"console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"}},
     "loggers": {
-        "django.db.backends": {"level": "ERROR", "handlers": ["console",], "propagate": False,},
-        "wagtail": {"handlers": ["console"], "level": "INFO", "propagate": False,},
-        "django.request": {"handlers": ["console"], "level": "WARNING", "propagate": False,},
-        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False,},
+        "django.db.backends": {"level": "ERROR", "handlers": ["console"], "propagate": False},
+        "wagtail": {"handlers": ["console"], "level": "INFO", "propagate": False},
+        "django.request": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},
     },
 }
 

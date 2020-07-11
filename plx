@@ -5,8 +5,8 @@ Use `plx --help` to see usage instructions
 To make this cli available as an executable on your path, follow this guide:
 https://dbader.org/blog/how-to-make-command-line-commands-with-python
 """
+from os import name, system
 import click
-from os import system, name
 
 
 @click.group()

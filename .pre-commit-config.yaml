@@ -1,4 +1,4 @@
-exclude: 'build|docs|node_modules|.git|.tox|static_files|postgres_files|media_files|crap|scripts|((?:[^/]*/)*)(.svg)|((?:[^/]*/)*)(.xml)'
+exclude: 'build|docs|node_modules|.git|.tox|static_files|media_files|scripts|((?:[^/]*/)*)(.svg)|((?:[^/]*/)*)(.xml)'
 include: 'planex'
 default_stages: [commit]
 fail_fast: true
@@ -17,7 +17,7 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-        args: ['--line-length', '160']
+        args: ['--line-length', '120']
         language_version: python3
 
   - repo: https://gitlab.com/pycqa/flake8
@@ -25,5 +25,10 @@ repos:
     hooks:
       - id: flake8
         args: ['--config=setup.cfg']
-        additional_dependencies: [flake8-isort]
         language_version: python3
+
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.0.9
+    hooks:
+      - id: isort
+        require_serial: true

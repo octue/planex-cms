@@ -39,7 +39,9 @@ class ParticlesConfiguration(models.Model):
     move_speed = models.DecimalField(default=2.5, max_digits=2, decimal_places=1)
     move_direction = models.PositiveSmallIntegerField(choices=PARTICLES_MOVE_DIRECTION_CHOICES, default=1)
     line_linked = models.BooleanField(default=True)
-    css_background_colour = ColorField(blank=True, help_text="Don't include # symbol. Will be overridden by linear gradient")
+    css_background_colour = ColorField(
+        blank=True, help_text="Don't include # symbol. Will be overridden by linear gradient"
+    )
     css_background_linear_gradient = models.CharField(
         blank=True, max_length=255, help_text="Enter in the format 'to right, #2b2b2b 0%, #243e3f 28%, #2b2b2b 100%'"
     )

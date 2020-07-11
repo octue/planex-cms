@@ -1,8 +1,7 @@
 from django.db import models
+from grapple.models import GraphQLString
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-
-from grapple.models import GraphQLString
 
 
 @register_setting
@@ -19,7 +18,14 @@ class SocialMediaSettings(BaseSetting):
 
     panels = [
         MultiFieldPanel(
-            [FieldPanel("facebook"), FieldPanel("github"), FieldPanel("instagram"), FieldPanel("linked_in"), FieldPanel("twitter"), FieldPanel("youtube"),],
+            [
+                FieldPanel("facebook"),
+                FieldPanel("github"),
+                FieldPanel("instagram"),
+                FieldPanel("linked_in"),
+                FieldPanel("twitter"),
+                FieldPanel("youtube"),
+            ],
             heading="Social Media Settings",
         )
     ]

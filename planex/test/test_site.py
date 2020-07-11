@@ -1,7 +1,6 @@
 from collections import OrderedDict
 from wagtail.core.models import Page
 
-
 from .base import BaseGrappleTestCase
 
 

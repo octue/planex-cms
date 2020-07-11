@@ -1,5 +1,5 @@
 from django.db.models import CharField, TextField
-from wagtail.documents.models import Document, AbstractDocument
+from wagtail.documents.models import AbstractDocument, Document
 
 
 class AccreditedDocument(AbstractDocument):
@@ -19,5 +19,9 @@ class AccreditedDocument(AbstractDocument):
         verbose_name_plural = "Accredited documents"
 
     def __str__(self):
-        credit = " ({})".format(self.accreditation) if (self.accreditation is not None) and (len(self.accreditation) > 0) else ""
+        credit = (
+            " ({})".format(self.accreditation)
+            if (self.accreditation is not None) and (len(self.accreditation) > 0)
+            else ""
+        )
         return "{}{}".format(self.title, credit)

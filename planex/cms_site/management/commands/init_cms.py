@@ -1,8 +1,9 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth import get_user_model
-from wagtail.core.models import Page, Site
-from cms_site.models import SitePage
 import logging
+from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand, CommandError
+from wagtail.core.models import Page, Site
+
+from cms_site.models import SitePage
 
 
 logger = logging.getLogger(__name__)
@@ -20,7 +21,13 @@ class Command(BaseCommand):
         :return void
         """
         parser.add_argument(
-            "--user", "-u", nargs=1, required=True, dest="user", default=None, help="Specify the email address of the user who will own the generated pages",
+            "--user",
+            "-u",
+            nargs=1,
+            required=True,
+            dest="user",
+            default=None,
+            help="Specify the email address of the user who will own the generated pages",
         )
 
     def handle(self, *args, **options):
@@ -86,6 +93,8 @@ class Command(BaseCommand):
             site.root_page = home_page
             site.is_default_site = True
         else:
-            site = Site.objects.create(hostname="www.octue.com", site_name="Octue", root_page=home_page, is_default_site=True)
+            site = Site.objects.create(
+                hostname="www.octue.com", site_name="Octue", root_page=home_page, is_default_site=True
+            )
 
         site.save()

@@ -1,6 +1,6 @@
-from django.db.models import CharField, ForeignKey, CASCADE
-from grapple.models import GraphQLString, GraphQLImage
-from wagtail.images.models import Image, AbstractImage, AbstractRendition
+from django.db.models import CASCADE, CharField, ForeignKey
+from grapple.models import GraphQLImage, GraphQLString
+from wagtail.images.models import AbstractImage, AbstractRendition, Image
 
 
 class AccreditedImage(AbstractImage):
@@ -22,7 +22,11 @@ class AccreditedImage(AbstractImage):
         verbose_name_plural = "Accredited images"
 
     def __str__(self):
-        credit = " ({})".format(self.accreditation) if (self.accreditation is not None) and (len(self.accreditation) > 0) else ""
+        credit = (
+            " ({})".format(self.accreditation)
+            if (self.accreditation is not None) and (len(self.accreditation) > 0)
+            else ""
+        )
         return "{}{}".format(self.title, credit)
 
 

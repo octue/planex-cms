@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import SitePage, Section, PageSectionsOrderable
+
+from .models import PageSectionsOrderable, Section, SitePage
 
 
 admin.site.register(PageSectionsOrderable)

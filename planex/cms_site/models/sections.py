@@ -1,30 +1,27 @@
 import logging
 from django.core.exceptions import ValidationError
-from django.db.models import Model, BooleanField, CharField
+from django.db.models import BooleanField, CharField, Model
 from django.utils.encoding import force_text
 from django.utils.text import slugify
-from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, MultiFieldPanel
+from grapple.models import GraphQLBoolean, GraphQLStreamfield, GraphQLString
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
-from grapple.models import (
-    GraphQLString,
-    GraphQLStreamfield,
-    GraphQLSnippet,
-    GraphQLBoolean,
-    GraphQLCollection,
-    GraphQLForeignKey,
-)
 
 from ..blocks import (
-    HeroSectionBlock,
-    TeamSectionBlock,
+    CardSectionBlock,
     CarouselSectionBlock,
     FaqSectionBlock,
-    TestimonialSectionBlock,
     FeatureSectionBlock,
-    CardSectionBlock,
+    HeroSectionBlock,
+    TeamSectionBlock,
+    TestimonialSectionBlock,
 )
+
+
+# from grapple.models import GraphQLCollection, GraphQLForeignKey, GraphQLSnippet
+
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +68,7 @@ class Section(index.Indexed, Model):
     )
 
     panels = [
-        MultiFieldPanel([FieldPanel("name"), FieldPanel("hash"), FieldPanel("dark"),], heading="Section Properties"),
+        MultiFieldPanel([FieldPanel("name"), FieldPanel("hash"), FieldPanel("dark")], heading="Section Properties"),
         StreamFieldPanel("content", heading="Section Content"),
     ]
 

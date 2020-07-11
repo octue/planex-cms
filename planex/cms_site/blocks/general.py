@@ -1,23 +1,23 @@
-from wagtail.core.blocks import (
-    StreamBlock,
-    RawHTMLBlock,
-    RichTextBlock,
-)
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.core.blocks import BlockQuoteBlock, CharBlock, RawHTMLBlock, RichTextBlock, StreamBlock, TextBlock
 from wagtail.embeds.blocks import EmbedBlock
-from wagtail.core.blocks import (
-    CharBlock,
-    TextBlock,
-    BlockQuoteBlock,
-)
+from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
+
 from .base import SectionBlock
 
 
 class GeneralSectionBlock(SectionBlock):
-    heading = CharBlock(required=False, max_length=100, label="Section Heading", help_text="Add a heading at the beginning of this page section")
+    heading = CharBlock(
+        required=False,
+        max_length=100,
+        label="Section Heading",
+        help_text="Add a heading at the beginning of this page section",
+    )
     description = TextBlock(
-        required=False, max_length=400, label="Section Description", help_text="Provide a slightly more detailed description of what this section is for"
+        required=False,
+        max_length=400,
+        label="Section Description",
+        help_text="Provide a slightly more detailed description of what this section is for",
     )
 
     content = StreamBlock(
@@ -33,7 +33,9 @@ class GeneralSectionBlock(SectionBlock):
             (
                 "quote",
                 BlockQuoteBlock(
-                    required=False, label="Quote", help_text="A quote that will appear as a block section of page content, with an attribution line beneath."
+                    required=False,
+                    label="Quote",
+                    help_text="A quote that will appear as a block section of page content, with an attribution line beneath.",
                 ),
             ),
             ("rich_text", RichTextBlock(required=False, label="Body (rich text)", help_text="Rich text based input.")),

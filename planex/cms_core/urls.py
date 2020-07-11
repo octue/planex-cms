@@ -1,4 +1,5 @@
 from django.urls import path
+
 from cms_core import views
 
 

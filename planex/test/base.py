@@ -1,7 +1,7 @@
+from pydoc import locate
 from django.conf import settings
 from django.test import TestCase
 from graphene.test import Client
-from pydoc import locate
 
 
 SCHEMA = locate(settings.GRAPHENE["SCHEMA"])

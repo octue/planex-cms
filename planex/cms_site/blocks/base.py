@@ -1,8 +1,10 @@
-from django import forms
-from django.utils.encoding import force_text
-from django.utils.text import slugify
-from wagtail.core.blocks import StructBlock, FieldBlock, BooleanBlock, CharBlock, TextBlock
+from wagtail.core.blocks import StructBlock
 
+
+# from django import forms
+# from django.utils.encoding import force_text
+# from django.utils.text import slugify
+# from wagtail.core.blocks import BooleanBlock, CharBlock, FieldBlock, StructBlock, TextBlock
 
 # class HashBlock(FieldBlock):
 #     """ Hash values which will allow sections to be automatically linked to using URL hashes

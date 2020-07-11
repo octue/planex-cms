@@ -1,11 +1,4 @@
-"""
-Production settings for amy, used for deployment on Heroku
-
-"""
-import logging
-
-
-from .base import *
+from .base import *  # noqa: F403
 
 
 # DIRECTORIES AND ENVIRONMENT
@@ -59,7 +52,10 @@ X_FRAME_OPTIONS = "DENY"
 
 # EMAIL CONFIGURATION
 
-ANYMAIL = {"MAILGUN_API_KEY": env("MAILGUN_ACCESS_KEY"), "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SERVER_NAME", default="mg.octue.com")}
+ANYMAIL = {
+    "MAILGUN_API_KEY": env("MAILGUN_ACCESS_KEY"),
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SERVER_NAME", default="mg.octue.com"),
+}
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 
@@ -167,8 +163,8 @@ CORALOGIX_APPLICATION_NAME = env("CORALOGIX_APPLICATION_NAME")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "ERROR", "handlers": ["console", "coralogix"],},
-    "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"},},
+    "root": {"level": "ERROR", "handlers": ["console", "coralogix"]},
+    "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"}},
     "handlers": {
         "coralogix": {
             "class": "coralogix.handlers.CoralogixLogger",
@@ -181,17 +177,21 @@ LOGGING = {
         "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"},
     },
     "loggers": {
-        "app": {"level": "DEBUG", "handlers": ["console", "coralogix",], "propagate": False,},
-        "api": {"level": "INFO", "handlers": ["console", "coralogix",], "propagate": False,},
-        "cms": {"level": "DEBUG", "handlers": ["console", "coralogix",], "propagate": False,},
-        "datefinder": {"level": "INFO", "handlers": ["console", "coralogix",], "propagate": False,},
-        "momcorp": {"level": "INFO", "handlers": ["console", "coralogix",], "propagate": False,},
-        "nibbler": {"level": "INFO", "handlers": ["console", "coralogix",], "propagate": False,},
-        "pink": {"level": "INFO", "handlers": ["console", "coralogix",], "propagate": False,},
-        "search": {"level": "DEBUG", "handlers": ["console", "coralogix",], "propagate": False,},
-        "utils": {"level": "DEBUG", "handlers": ["console", "coralogix",], "propagate": False,},
-        "django.db.backends": {"level": "WARNING", "handlers": ["console", "coralogix",], "propagate": False,},
-        "django.security.DisallowedHost": {"level": "WARNING", "handlers": ["console", "coralogix",], "propagate": False,},
+        "app": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
+        "api": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
+        "cms": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
+        "datefinder": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
+        "momcorp": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
+        "nibbler": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
+        "pink": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
+        "search": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
+        "utils": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
+        "django.db.backends": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
+        "django.security.DisallowedHost": {
+            "level": "WARNING",
+            "handlers": ["console", "coralogix"],
+            "propagate": False,
+        },
     },
 }
 

@@ -24,7 +24,9 @@ def for_each_page_revision(*model_names):
             ContentType = apps.get_model("contenttypes.ContentType")
             PageRevision = apps.get_model("wagtailcore.PageRevision")
 
-            content_types = [ContentType.objects.get_for_model(apps.get_model(model_name)) for model_name in model_names]
+            content_types = [
+                ContentType.objects.get_for_model(apps.get_model(model_name)) for model_name in model_names
+            ]
             revisions = PageRevision.objects.filter(page__content_type__in=content_types)
 
             for revision in revisions.select_related("page"):

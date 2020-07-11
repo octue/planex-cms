@@ -1,5 +1,6 @@
-from wagtail.core.blocks import StructBlock, ListBlock, CharBlock, TextBlock, URLBlock, ChoiceBlock
+from wagtail.core.blocks import CharBlock, ListBlock, StructBlock, TextBlock, URLBlock
 from wagtail.images.blocks import ImageChooserBlock
+
 from .base import SectionBlock
 
 
@@ -20,7 +21,11 @@ class TeamMemberBlock(StructBlock):
 
 class TeamSectionBlock(SectionBlock):
     heading = CharBlock(
-        required=False, max_length=100, label="Section Heading", help_text="Add a heading at the beginning of this page section", default="Our Amazing Team"
+        required=False,
+        max_length=100,
+        label="Section Heading",
+        help_text="Add a heading at the beginning of this page section",
+        default="Our Amazing Team",
     )
     description = TextBlock(
         required=False,

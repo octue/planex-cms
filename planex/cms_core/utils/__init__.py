@@ -69,9 +69,7 @@ def export_event(event, format="ical"):
         )
 
     # Finish event
-    ical_components.extend(
-        ["END:VCALENDAR",]
-    )
+    ical_components.extend(["END:VCALENDAR"])
 
     # Join components
     return "\r".join(ical_components)
