@@ -18,31 +18,38 @@ addons:
 
 env:
   global:
-    - DJANGO_SETTINGS_MODULE=planex.settings.production
-    - DATABASE_URL=postgres://postgres@localhost/test_db
+    - DJANGO_SETTINGS_MODULE=planex.settings.test
+    - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
     - CFG_SECRET_KEY=iamnotsosecret
     - CFG_ALLOWED_HOSTS=localhost
 
-before_script:
-  # Create a database
-  - psql -c 'create database test_db;' -U postgres
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get --yes remove postgresql\*
+  - sudo apt-get install -y postgresql-11 postgresql-client-11
+  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+  - sudo service postgresql restart 11
 
 install:
+  - pip install codecov
   - pip install wheel
   - pip install -r requirements.txt
   - pip install flake8
   - pip install isort
 
+before_script:
+  - psql --version
+  - psql -c 'create database travis_ci_test;' -U postgres
+
 script:
-  # Code style, missing imports, etc
   - flake8 planex
   - isort --check-only --diff --recursive planex
-
-  # Run system checks
   - python manage.py check
-
-  # Check for missing migrations
   - python manage.py makemigrations --check
+  - python manage.py migrate --noinput
+  - coverage run manage.py test planex.test
 
-  # Run tests
-  - python manage.py test
+# Push the results back to codecov
+after_success:
+  - coverage xml && codecov -f coverage.xml --commit=$TRAVIS_COMMIT
