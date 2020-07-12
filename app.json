@@ -2,5 +2,14 @@
   "name": "PlanEx CMS",
   "description": "A capable headless CMS",
   "repository": "https://github.com/octue/planex-cms",
-  "keywords": ["cms", "python", "django", "wagtail"]
+  "keywords": ["cms", "python", "django", "wagtail"],
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "heroku-redis:hobby-dev"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
 }
