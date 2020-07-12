@@ -4,4 +4,5 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-python manage.py runserver 0.0.0.0:8000
+# Using the --nostatic option forces use of whitenoise, making the environment more production-like
+python manage.py runserver 0.0.0.0:8000 --nostatic

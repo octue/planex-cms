@@ -49,9 +49,11 @@ CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"
 
 # STATIC FILES
 
+
 # Serve compressed and cached static files
 # TIP: Uncomment, then run npm install (root dir) and collectstatic to diagnose static files problems
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # MEDIA FILES
