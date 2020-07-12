@@ -99,10 +99,17 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Uploaded Media Files See: http://django-storages.readthedocs.io/en/latest/index.html
 # TODO alternative user configuration for management of analyses/data storage, and conf. for user media files
+BOTO3_ACCOUNT_ID = env.str("BOTO3_ACCOUNT_ID")
+BOTO3_REGION = "eu-west-1"
+BOTO3_SERVICES = ["s3"]
+BOTO3_OPTIONAL_PARAMS = {"s3": {"config": {"addressing_style": "path"}}}
+BOTO3_ACCESS_KEY = env.str("BOTO3_ACCESS_KEY")
+BOTO3_SECRET_KEY = env.str("BOTO3_SECRET_KEY")
+
 AWS_ACCESS_KEY_ID = BOTO3_ACCESS_KEY
 AWS_SECRET_ACCESS_KEY = BOTO3_SECRET_KEY
-AWS_STORAGE_BUCKET_NAME = "octue-amy-assets"
-AWS_S3_REGION_NAME = "eu-west-1"
+AWS_STORAGE_BUCKET_NAME = env.str("ASSETS_BUCKET_NAME")
+AWS_S3_REGION_NAME = BOTO3_REGION
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
 # AWS cache settings, don't change unless you know what you're doing:
@@ -117,43 +124,16 @@ MEDIA_URL = "https://s3.amazonaws.com/{bucket}/".format(bucket=AWS_STORAGE_BUCKE
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
-# AUTH SETTINGS, PASSWORD STORAGE/VALIDATION, OAUTH2
-
-# Set the URL to redirect users to in registration confirmation
-AUTH_REGISTER_URL = "https://octue.com/register/"  # Appended with the signature created to verify the user
-
 # DJANGO UTILITIES
-
-
-# ELASTICSEARCH
-ES_URL = os.environ.get("BONSAI_URL")
-
-ELASTICSEARCH_DSL = {
-    "default": {"hosts": ES_URL},
-}
-
-# Name of the Elasticsearch indices
-ELASTICSEARCH_INDEX_NAMES = {
-    "search.documents.applications": "prod_entities",
-    "search.documents.twins": "prod_entities",
-    "search.documents.users": "prod_entities",
-}
 
 
 # REDIS and CELERY
 
 
-# CONTENT MANAGEMENT SYSTEM
-
-
-# API
-REDOC_LOGO_URL = "https://www.octue.com/static/images/assets_octue-api-logo.png"
-
 # TESTING
 
 # Always turn testing off in production
 TESTING = False
-TESTING_EXPENSIVE = False
 
 
 # LOGGING
@@ -168,47 +148,32 @@ LOGGING = {
     "handlers": {
         "coralogix": {
             "class": "coralogix.handlers.CoralogixLogger",
-            "level": "DEBUG",
+            "level": "INFO",
             "formatter": "verbose",
             "private_key": CORALOGIX_API_KEY,
             "app_name": CORALOGIX_APPLICATION_NAME,
             "subsystem": "planex",
         },
-        "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"},
+        "console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "verbose"},
     },
     "loggers": {
-        "app": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
-        "api": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
-        "cms": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
-        "datefinder": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
-        "momcorp": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
-        "nibbler": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
-        "pink": {"level": "INFO", "handlers": ["console", "coralogix"], "propagate": False},
-        "search": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
-        "utils": {"level": "DEBUG", "handlers": ["console", "coralogix"], "propagate": False},
+        "app": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
+        "cms_core": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
+        "cms_site": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
+        "crm": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
         "django.db.backends": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
-        "django.security.DisallowedHost": {
-            "level": "WARNING",
-            "handlers": ["console", "coralogix"],
-            "propagate": False,
-        },
+        "wagtail": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
+        "django.request": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
+        "django.security": {"level": "WARNING", "handlers": ["console", "coralogix"], "propagate": False},
     },
 }
 
 
-# INTEGRATIONS - AWS
-
-
 # INTEGRATIONS - GOOGLE
 
-# We want GA code to be rendered in production, but not in testing
-GOOGLE_ANALYTICS_ID = "UA-43965341-2"
-
-# Unlike base, this raises ImproperlyConfigured exception if RECAPTCHA_PRIVATE_KEY not in os.environ
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_PRIVATE_KEY")
 
-
-# INTEGRATIONS - GITHUB
-
-# INTEGRATIONS - PLOTLY
+GA_ID = env.str("GOOGLE_ANALYTICS_ID")  # Causes the GA code to get rendered (in production pages)
+GA_KEY_CONTENT = env.str("GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY")
+GA_VIEW_ID = f'ga:{env.str("GOOGLE_ANALYTICS_VIEW_ID")}'

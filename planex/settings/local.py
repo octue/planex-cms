@@ -107,13 +107,7 @@ LOGGING = {
 }
 
 
-# INTEGRATIONS - AWS
-
-
 # INTEGRATIONS - GOOGLE
-
-
-# INTEGRATIONS - GITHUB
-
-
-# INTEGRATIONS - PLOTLY
+# GA_ID = env.str('GOOGLE_ANALYTICS_ID') Missing ID suppresses rendering of the GA code in non-production environments
+GA_KEY_CONTENT = env.str("DEVELOPERS_GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY")
+GA_VIEW_ID = f'ga:{env.str("DEVELOPERS_GOOGLE_ANALYTICS_VIEW_ID")}'

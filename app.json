@@ -7,6 +7,9 @@
     "heroku-postgresql:hobby-dev",
     "heroku-redis:hobby-dev"
   ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "planex.settings.production",
+  },
   "buildpacks": [
     {
       "url": "heroku/python"
