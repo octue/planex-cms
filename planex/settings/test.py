@@ -86,16 +86,18 @@ TESTING = env.bool("TESTING", default=True)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "WARNING", "handlers": ["console"]},
-    "formatters": {
-        "verbose": {"format": "%(levelname)s \t%(asctime)s %(module)s \t" "%(process)d %(thread)d \t%(message)s"}
-    },
-    "handlers": {"console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"}},
+    "root": {"level": "ERROR", "handlers": ["console"]},
+    "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"}},
+    "handlers": {"console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "verbose"}},
     "loggers": {
-        "django.db.backends": {"level": "ERROR", "handlers": ["console"], "propagate": False},
-        "wagtail": {"handlers": ["console"], "level": "INFO", "propagate": False},
-        "django.request": {"handlers": ["console"], "level": "WARNING", "propagate": False},
-        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+        "app": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        "cms_core": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        "cms_site": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        "crm": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        "django.db.backends": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "wagtail": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "django.request": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "django.security": {"level": "WARNING", "handlers": ["console"], "propagate": False},
     },
 }
 
