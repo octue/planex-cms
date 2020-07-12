@@ -50,6 +50,7 @@ script:
   - python manage.py check
   - python manage.py makemigrations --check
   - python manage.py migrate --noinput
+  - python manage.py collectstatic --noinput
   - coverage run manage.py test planex.test
 
 after_success:
