@@ -96,7 +96,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Fix problem where django-fontawesome won't find compressed css files after collectstatic
 # https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css
-FONTAWESOME_5_CSS = "fontawesome_5/css/django-fontawesome.b3b64d7e360c.css"
+# FONTAWESOME_5_CSS = "fontawesome_5/css/django-fontawesome.b3b64d7e360c.css"
 
 
 # MEDIA FILES
