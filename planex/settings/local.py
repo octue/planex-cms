@@ -9,9 +9,7 @@ from .base import *  # noqa: F403
 DEBUG = env.bool("DJANGO_DEBUG", default=True)
 TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-# Note: This key only used for development and testing.
+# Note: This key only used for development
 SECRET_KEY = env.str("DJANGO_SECRET_KEY", default="`c}ycP0(JRg*azi<<|=8d>?vH#@xI:P?Yksdc?Zog$~WZHw|oi")
 
 
@@ -93,21 +91,24 @@ TESTING = env.bool("TESTING", default=True)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "WARNING", "handlers": ["console"]},
-    "formatters": {
-        "verbose": {"format": "%(levelname)s \t%(asctime)s %(module)s \t" "%(process)d %(thread)d \t%(message)s"}
-    },
-    "handlers": {"console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"}},
+    "root": {"level": "ERROR", "handlers": ["console"]},
+    "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"}},
+    "handlers": {"console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "verbose"}},
     "loggers": {
-        "django.db.backends": {"level": "ERROR", "handlers": ["console"], "propagate": False},
-        "wagtail": {"handlers": ["console"], "level": "INFO", "propagate": False},
-        "django.request": {"handlers": ["console"], "level": "WARNING", "propagate": False},
-        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+        "app": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "cms_core": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "cms_site": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "crm": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "django.db.backends": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "wagtail": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "django.request": {"level": "WARNING", "handlers": ["console"], "propagate": False},
+        "django.security": {"level": "WARNING", "handlers": ["console"], "propagate": False},
     },
 }
 
 
 # INTEGRATIONS - GOOGLE
+
 # GA_ID = env.str('GOOGLE_ANALYTICS_ID') Missing ID suppresses rendering of the GA code in non-production environments
 GA_KEY_CONTENT = env.str("DEVELOPERS_GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY")
 GA_VIEW_ID = f'ga:{env.str("DEVELOPERS_GOOGLE_ANALYTICS_VIEW_ID")}'
