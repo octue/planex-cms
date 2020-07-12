@@ -7,5 +7,5 @@ class CMSSiteAppConfig(AppConfig):
     verbose_name = "Site"
 
     def ready(self):
-        # import site.signals
+        # import cms_site.signals
         pass
