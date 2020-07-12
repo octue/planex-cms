@@ -92,7 +92,9 @@ DATABASES["default"] = env.db("DATABASE_URL")
 # STATIC FILES
 
 # Serve compressed and cached static files
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# TODO return to compressedmanifest when https://github.com/BenjjinF/django-fontawesome-5/issues/15 is fixed
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 # Fix problem where django-fontawesome won't find compressed css files after collectstatic
 # https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css

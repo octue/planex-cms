@@ -6,7 +6,7 @@ from .base import *  # noqa: F403
 
 # APP CONFIGURATION
 
-DEBUG = env.bool("DJANGO_DEBUG", default=True)
+DEBUG = False  # env.bool("DJANGO_DEBUG", default=True)
 TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 
 # Note: This key only used for development
@@ -53,8 +53,7 @@ CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"
 # Serve compressed and cached static files
 # TIP: Uncomment, then run npm install (root dir) and collectstatic to diagnose static files problems
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 # MEDIA FILES
 
