@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotFound
+from django.shortcuts import redirect
 from django.urls import include, path
 from django.views.decorators.cache import never_cache
 from django.views.decorators.vary import vary_on_headers
@@ -13,19 +13,16 @@ from wagtail.core.models import Page
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.utils.urlpatterns import decorate_urlpatterns
 
-from cms_core import urls as core_urls
+from app.views import robots
 from cms_core.utils.cache import get_default_cache_control_decorator
-from cms_core.views import robots
+from crm import urls as crm_urls
 
-
-# from site import urls as site_urls
 
 private_urlpatterns = [
-    path("admin/db", admin.site.urls),
-    path("admin/cms", include(wagtailadmin_urls)),
-]
+    path("admin/db/", admin.site.urls),
+    path("admin/cms/", include(wagtailadmin_urls)),
+] + decorate_urlpatterns([path("documents/", include(wagtaildocs_urls))], never_cache)
 
-private_urlpatterns += decorate_urlpatterns([path("documents/", include(wagtaildocs_urls))], never_cache)
 
 urlpatterns = [
     path("sitemap.xml", sitemap),
@@ -44,16 +41,15 @@ if settings.DEBUG:
 
     # Add views for testing 404 and 500 templates
     urlpatterns += [
-        path("test404/", TemplateView.as_view(template_name="404.html")),
-        path("test500/", TemplateView.as_view(template_name="500.html")),
+        path("test/404/", TemplateView.as_view(template_name="404.html")),
+        path("test/500/", TemplateView.as_view(template_name="500.html")),
     ]
 
 
 urlpatterns += [
-    path("", include(core_urls)),
-    # path('', include(site_urls)),
+    path("", include(crm_urls)),
     path("", include(grapple_urls)),
-    path("", lambda request: HttpResponseNotFound(), name="home"),
+    path("", lambda: redirect("/admin/cms/", permanent=True)),  # Redirect homepage to the wagtail admin
 ]
 
 

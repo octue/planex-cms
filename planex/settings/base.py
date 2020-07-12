@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "fontawesome_5",
     "storages",
+    "jsoneditor",
     "cms_core.apps.CMSCoreAppConfig",
     "cms_site.apps.CMSSiteAppConfig",
     "grapple",
@@ -353,8 +354,8 @@ SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 
 # INTEGRATIONS - HUBSPOT
-
-HUBSPOT_API_KEY = env.str("HUBSPOT_API_KEY")
+# If 'None' the
+HUBSPOT_API_KEY = env.str("HUBSPOT_API_KEY", None)
 
 
 # INTEGRATIONS - NETLIFY
