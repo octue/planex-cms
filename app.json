@@ -1,0 +1,6 @@
+{
+  "name": "PlanEx CMS",
+  "description": "A capable headless CMS",
+  "repository": "https://github.com/octue/planex-cms",
+  "keywords": ["cms", "python", "django", "wagtail"]
+}
