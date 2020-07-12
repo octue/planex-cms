@@ -1,45 +1,51 @@
-Octue.com on Wagtail
+planex-cms: A capable headless CMS based on Wagtail
 ====================
 
 [![Build Status](https://travis-ci.com/octue/planex-cms.svg?branch=master)](https://travis-ci.com/octue/planex-cms)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 This project is the backend CMS for [www.octue.com](https://www.octue.com). The [Front-end](https://github.com/octue/planex/) is built with Gatsby and consumes the CMS's content via GraphQL.
 
-Setup
------
+Quick-start
+-----------
 
-### Installation
+One-click deploy to heroku using the button above. It'll run on the free tier, but its best to use hobby tier because:
+ - You get SSL (everything on https:// not http://) which avoids your login details being sent unencrypted over the internet (!)
+ - If your frontend uses forms, the server needs to be always-on to receive the form submissions
 
-Run the following commands:
+You can access it at whatever URL heroku gives you - choosing the free tier with a hobby database is fine for now!
+
+If you wish, sign into your domain name provider and, point `https://cms.your-domain.com` to your heroku app ([here's how](https://medium.com/@imranhsayed/adding-your-custom-domain-to-heroku-app-cdd68d2db67f)).
+
+
+Development
+-----------
+
+To actually develop this repo (or your fork of it), [install docker](https://docs.docker.com/engine/install/), then run the following commands:
 
 ```bash
-python manage.py createcachetable
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver 0.0.0.0:8000
+plx manage createcachetable
+plx manage migrate
+plx manage collectstatic
+plx manage createsuperuser
+plx manage init_cms --user <the superuser email you just created>
+plx dev
 ```
 
-After the installation the app will accessible on the host machine as http://localhost:8000/admin. The codebase is located on the host
-machine an exported to the VM as a shared folder. Code editing and Git operations will generally be done on the host.
-
-
-### Download production data and media to local VM
-
-```
-heroku login
-fab pull-production-data
-fab pull-production-media
-```
-
-You may need to check on Heroku dashboard (https://dashboard.heroku.com) if you have the permission to access the `planex-cms` app.
+After the installation the content management system will accessible on the host machine as http://localhost:8000/.
 
 
 Site Architecture
 -----------------
 
-In this project Wagtail is used as a headless CMS and its data is consumed via [GraphQL](https://graphql.org/). This means that to preview any UI changes on the site you'll also need to setup the [frontend](https://github.com/octue/planex/) component. Wagtail front-end URLs are only accessible by the logged-in users to avoid unauthorised access.
+In this project Wagtail is used as a headless CMS, which also serves documents and images.
+Its data is consumed via [GraphQL](https://graphql.org/).
+
+To turn this into a viewable site, you'll also need to setup the [frontend](https://github.com/octue/planex/). Wagtail
+front-end URLs are only accessible by the logged-in users to avoid unauthorised access.
 
 ### What's different here?
 
@@ -57,20 +63,16 @@ The HTML of each page is generated in node during the build process. This means 
 
 This project (the backend) is deployed on heroku and is automatically deployed when the `master` branch is updated. The frontend is hosted on [Netlify](https://www.netlify.com/) and is also linked to the frontend repo for auto deployment (new netlify builds are also triggered by a page publish in Wagtail). Netlify will also create 'deploy previews' whenever an MR is created so that you can preview your changes before you merge.
 
-The admin for the live site can be found at https://cms.octue.com/admin/
+The admin for the live site can be found at https://cms.octue.com/
 You can run test GraphQL queries at https://cms.octue.com/graphql/
-
-There will be a staging version of the app on Heroku:
-
-Admin: https://cms.staging.octue.com/admin/
-GraphQL: https://cms.staging.octue.com/graphql/
-
-
-### Deployments
-
-Merges to `master` and `staging` will automatically trigger a deployment to the production and staging sites, respectively.
 
 
 ### What order should I develop in?
 
-When developing a new feature such as a Page model (with accompanying UI), the best approach is to build the models and graphql schema with the project running locally. Once you've finished your backend work, start developing the frontend by pointing the Gatsby project at your local GraphQL endpoint. Once both sides of the feature are done, get your backend reviewed and deployed to Production/Staging. Once your backend is public you can then submit your front-end code for review because Netlfiy will be able to build a preview of the branch with the correct data (The gatsby build will fail if the GraphQL queries don't match up with the backend).
+When developing a new feature such as a Page model (with accompanying UI), the best approach is to:
+ - Build the new models and graphql schema with the project running locally
+ - Then develop the frontend by pointing it at your local GraphQL endpoint.
+ - Once both sides of the feature are done, get your backend reviewed and deployed.
+ - When your backend is public you can then submit your front-end code for review because Netlfiy will be
+ able to build a preview of the branch with the correct data (The gatsby build will fail if the GraphQL queries don't
+ match up with the backend).
