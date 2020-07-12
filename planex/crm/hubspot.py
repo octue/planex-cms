@@ -7,7 +7,10 @@ from hubspot3.error import HubspotNotFound
 
 
 logger = logging.getLogger(__name__)
-client = Hubspot3(api_key=settings.HUBSPOT_API_KEY)
+
+
+if settings.HUBSPOT_API_KEY:
+    client = Hubspot3(api_key=settings.HUBSPOT_API_KEY)
 
 
 def initialise():
@@ -39,14 +42,20 @@ def initialise():
             raise Exception('Cannot get "Support Pipeline" from hubspot. Check your support ticket creation pipelines.')
 
     except Exception as e:
+        if settings.HUBSPOT_API_KEY is None:
+            logger.warning(
+                "Attempted to start the HubSpot client but no api key given. Generate an api key over at hubspot, "
+                "then add it to the app as an environment variable (config var on heroku)."
+            )
+            return None, None, None
+
         if settings.DEBUG:
             logger.warning(
                 "Error initialising connection to HubSpot CRM. Perhaps you have no internet connection? Error was %s",
-                e.message,
+                getattr(e, "message", "unknown"),
             )
 
-        else:
-            raise
+        raise
 
     return support_pipeline, support_stage, subscription_statuses
 
