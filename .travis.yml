@@ -5,11 +5,9 @@ cache:
   directories:
     - node_modules
 
-# Use container-based infrastructure
 dist: trusty
 sudo: false
 
-# Services
 services:
   - postgresql
 
@@ -50,6 +48,5 @@ script:
   - python manage.py migrate --noinput
   - coverage run manage.py test planex.test
 
-# Push the results back to codecov
 after_success:
   - coverage xml && codecov -f coverage.xml --commit=$TRAVIS_COMMIT
