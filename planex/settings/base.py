@@ -45,6 +45,7 @@ ALLOWED_HOSTS = [
     ".octue.dev",
     "octue.com",
     ".octue.com",
+    "plxprod.herokuapp.com",
 ]
 
 DEBUG = env.bool("DJANGO_DEBUG", False)
