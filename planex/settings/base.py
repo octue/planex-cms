@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "fontawesome_5",
-    "storages",
     "jsoneditor",
     "cms_core.apps.CMSCoreAppConfig",
     "cms_site.apps.CMSSiteAppConfig",
