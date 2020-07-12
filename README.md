@@ -1,7 +1,7 @@
 planex-cms: A capable headless CMS based on Wagtail
 ====================
 
-[![Build Status](https://travis-ci.com/octue/planex-cms.svg?branch=master)](https://travis-ci.com/octue/planex-cms)
+[![Build Status](https://travis-ci.com/octue/planex-cms.svg?token=ZfRed1JDegwQ9HCopiWT&branch=master)](https://travis-ci.com/octue/planex-cms)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
