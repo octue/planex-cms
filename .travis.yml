@@ -22,7 +22,7 @@ env:
     - CFG_ALLOWED_HOSTS=localhost
     # TEST_GOOGLE_ANALYTICS_VIEW_ID:
     - secure: "ocRCzGXixU2hWvhWTDueG9D0sI6I22HR9z4m790fOKgodyTEEGANl8Kv4gcGyrLZ1FI+gQ3nG/7d52usjWmr33+bbU7aNL4q6sqagLT6STV3vyQniOGljpK0Ic5eWtKlds2rISQkJKCovjgNU+JcMow+o+6PZdjSZBzep8pyVO7Vb36kBZgT5+SedPdgDAvr0z7gNdSRNU4bnVFZL+xgPgYTBLwLrJpHO8arf3DExNjZ/Rks+XoWjezjQcbUqjA1WMRoqNiB8hyxKRBkS+ewrAFxMAcCJ2cc04hwZ4zGAmcQgtmJjek7PKgrnENGzSB8EEUIv86/xmGjIxfWP415bRGNGMGZDiAGi1EZ9f6JTrf8ouoF+wjgQavI2lw9C+RMb/XoGDd8iScbyZtzZoB7PqAJhBWke/jCshH5Ovz4nFvMF5cuXGQV5iAsm0le+6VvfbTSebOqWe1FMtdysgsircnre7mDkp1rbnUqEGzPfaDdQyBSm7vUcgRmrKYSy2MwpXUMRrXgx7wRBtU8L7dsIzIZGoNDNSArhGfVcjJt9GuOVClj5vhl2CyCPAXTy/okdMPyHeynlUyuAVOgKo41TS7ZpQZS5POaUdjfSQG4mS4tZSnrv2EOV9rs4HZPzGEm/Eoc02L8FZSS+oD27max6fu2FiGAoZzL5tdjN5PbIhM="
-
+    # KOMBU_FERNET_KEY
 before_install:
   - sudo apt-get update
   - sudo apt-get --yes remove postgresql\*
@@ -37,10 +37,12 @@ install:
   - pip install -r requirements.txt
   - pip install flake8
   - pip install isort
+  - pip install cryptography  # Required to generate the fernet key
 
 before_script:
   - psql --version
   - psql -c 'create database travis_ci_test;' -U postgres
+  - python scripts/generate_kombu_fernet_key.py
 
 script:
   - flake8 planex
