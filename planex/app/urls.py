@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
 from django.urls import include, path
 from django.views.decorators.cache import never_cache
 from django.views.decorators.vary import vary_on_headers
@@ -18,10 +17,9 @@ from cms_core.utils.cache import get_default_cache_control_decorator
 from crm import urls as crm_urls
 
 
-private_urlpatterns = [
-    path("admin/db/", admin.site.urls),
-    path("admin/cms/", include(wagtailadmin_urls)),
-] + decorate_urlpatterns([path("documents/", include(wagtaildocs_urls))], never_cache)
+private_urlpatterns = [path("admin/db/", admin.site.urls)] + decorate_urlpatterns(
+    [path("documents/", include(wagtaildocs_urls))], never_cache
+)
 
 
 urlpatterns = [
@@ -49,7 +47,8 @@ if settings.DEBUG:
 urlpatterns += [
     path("", include(crm_urls)),
     path("", include(grapple_urls)),
-    path("", lambda: redirect("/admin/cms/", permanent=True)),  # Redirect homepage to the wagtail admin
+    path("", include(wagtailadmin_urls)),
+    # path("", lambda request : redirect("/admin/cms/", permanent=True)),  # Redirect homepage to the wagtail admin
 ]
 
 
