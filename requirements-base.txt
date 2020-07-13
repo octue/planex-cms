@@ -41,6 +41,7 @@ boto3==1.7.82
 click>=7.1.2,<8
 django==2.2.14  # wagtail-grapple==0.5.1: <2.3, pyup: < 3.1
 django-anymail==7.0.0
+django-celery-beat==2.0.0
 django-cors-headers==3.3.0
 django-environ==0.4.5
 django-extensions==2.1.6  # https://github.com/django-extensions/django-extensions

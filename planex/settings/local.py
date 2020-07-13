@@ -38,7 +38,7 @@ EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.c
 
 # CACHING CONFIGURATION
 
-CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": ""}}
+# CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": ""}}
 
 
 # INTERNATIONALISATION
@@ -92,7 +92,7 @@ TESTING = env.bool("TESTING", default=True)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "ERROR", "handlers": ["console"]},
+    "root": {"level": "DEBUG", "handlers": ["console"]},
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"}},
     "handlers": {"console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "verbose"}},
     "loggers": {

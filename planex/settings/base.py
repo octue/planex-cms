@@ -1,9 +1,12 @@
+import logging
 import os
 import environ
 from corsheaders.defaults import default_headers
 
 import sys
 
+
+logger = logging.getLogger(__name__)
 
 # DIRECTORIES AND ENVIRONMENT
 
@@ -157,6 +160,20 @@ DATABASES = {
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
+# CELERY
+# Use fernet to symmetrically encrypt messages to/from redis. Note that the fernet serialiser library reads from
+# os.environ, so an error results if KOMBU_FERNET_KEY is missing from the environment (e.g. if read in from the .env
+# file). We force addition to the environment here so we can treat it like all the other django settings
+KOMBU_FERNET_KEY = env.str("KOMBU_FERNET_KEY")
+os.environ["KOMBU_FERNET_KEY"] = KOMBU_FERNET_KEY
+
+# Heroku REDIS_URL does not pass the DB number, so we parse in default = 0.
+# We also parse out the name which is used by channels
+REDIS_URL = env("REDIS_URL")
+REDIS_HOST = ":".join(REDIS_URL.lstrip("redis://").split(":")[0:-1])
+REDIS_PORT = REDIS_URL.split(":")[-1]
+REDIS_LOCATION = f"{REDIS_URL}/0"
+
 
 # CACHING CONFIGURATION
 
@@ -196,15 +213,9 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # CACHE_CONTROL_STALE_WHILE_REVALIDATE = int(
 #     env.get('CACHE_CONTROL_STALE_WHILE_REVALIDATE', 30)
 # )
-
 # Do not use the same Redis instance for other things like Celery!
-if "REDIS_URL" in env:
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": env.url("REDIS_URL", default="redis://:redis_password@redis:6379"),
-        }
-    }
+if env.bool("REDIS_AS_CACHE", True):
+    CACHES = {"default": {"BACKEND": "django_redis.cache.RedisCache", "LOCATION": REDIS_URL}}
 else:
     CACHES = {"default": {"BACKEND": "django.core.cache.backends.db.DatabaseCache", "LOCATION": "database_cache"}}
 
@@ -303,7 +314,20 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
 
 
-# REDIS and CELERY
+# CELERY
+# Use fernet to symmetrically encrypt messages to/from redis. Note that the fernet serialiser library reads from
+# os.environ, so an error results if KOMBU_FERNET_KEY is missing from the environment (e.g. if read in from the .env
+# file). We force addition to the environment here so we can treat it like all the other django settings
+KOMBU_FERNET_KEY = env.str("KOMBU_FERNET_KEY")
+os.environ["KOMBU_FERNET_KEY"] = KOMBU_FERNET_KEY
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TASK_TIME_LIMIT = 240
+
+INSTALLED_APPS += ["planex.app.celery.CeleryConfig", "django_celery_beat"]
 
 
 # WAGTAIL CONTENT MANAGEMENT SYSTEM
