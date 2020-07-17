@@ -10,6 +10,7 @@ sudo: false
 
 services:
   - postgresql
+  - redis
 
 addons:
   postgresql: "11.3"
@@ -20,6 +21,7 @@ env:
     - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
     - CFG_SECRET_KEY=iamnotsosecret
     - CFG_ALLOWED_HOSTS=localhost
+    - REDIS_URL=redis://localhost:6379/0
     # TEST_GOOGLE_ANALYTICS_VIEW_ID
     - secure: "ocRCzGXixU2hWvhWTDueG9D0sI6I22HR9z4m790fOKgodyTEEGANl8Kv4gcGyrLZ1FI+gQ3nG/7d52usjWmr33+bbU7aNL4q6sqagLT6STV3vyQniOGljpK0Ic5eWtKlds2rISQkJKCovjgNU+JcMow+o+6PZdjSZBzep8pyVO7Vb36kBZgT5+SedPdgDAvr0z7gNdSRNU4bnVFZL+xgPgYTBLwLrJpHO8arf3DExNjZ/Rks+XoWjezjQcbUqjA1WMRoqNiB8hyxKRBkS+ewrAFxMAcCJ2cc04hwZ4zGAmcQgtmJjek7PKgrnENGzSB8EEUIv86/xmGjIxfWP415bRGNGMGZDiAGi1EZ9f6JTrf8ouoF+wjgQavI2lw9C+RMb/XoGDd8iScbyZtzZoB7PqAJhBWke/jCshH5Ovz4nFvMF5cuXGQV5iAsm0le+6VvfbTSebOqWe1FMtdysgsircnre7mDkp1rbnUqEGzPfaDdQyBSm7vUcgRmrKYSy2MwpXUMRrXgx7wRBtU8L7dsIzIZGoNDNSArhGfVcjJt9GuOVClj5vhl2CyCPAXTy/okdMPyHeynlUyuAVOgKo41TS7ZpQZS5POaUdjfSQG4mS4tZSnrv2EOV9rs4HZPzGEm/Eoc02L8FZSS+oD27max6fu2FiGAoZzL5tdjN5PbIhM="
     # KOMBU_FERNET_KEY
