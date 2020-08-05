@@ -32,7 +32,7 @@ class PageSectionsOrderable(Orderable):
         SnippetChooserPanel("section"),
     ]
 
-    graphql_fields = [GraphQLInt("section_id"), GraphQLForeignKey("section", "cms_site.Section")]
+    graphql_fields = [GraphQLInt("page_id"), GraphQLInt("section_id"), GraphQLForeignKey("section", "cms_site.Section")]
 
 
 class SitePage(Page):
