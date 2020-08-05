@@ -1,7 +1,13 @@
 import logging
-from celery import Celery
-from django.apps import AppConfig
+import os
 from django.conf import settings
+
+
+print(repr(settings.KOMBU_FERNET_KEY))
+print(repr(os.environ["KOMBU_FERNET_KEY"]))
+
+from celery import Celery  # noqa:E402
+from django.apps import AppConfig  # noqa:E402
 
 
 app = Celery("app")

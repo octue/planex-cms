@@ -272,6 +272,7 @@ STATICFILES_DIRS = [
     str(os.path.join(APP_DIR, "static")),
 ]
 
+
 # MEDIA FILES
 MEDIA_ROOT = os.path.join(str(REPO_DIR), "media_files")
 MEDIA_URL = "/media/"
