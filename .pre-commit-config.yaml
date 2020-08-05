@@ -6,12 +6,13 @@ default_language_version:
   python: python3  # force all unspecified python hooks to run python3
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: master
+    rev: v3.1.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
-        language_version: python3
+      - id: check-json
+      - id: check-added-large-files
 
   - repo: https://github.com/psf/black
     rev: 19.10b0
@@ -32,3 +33,20 @@ repos:
     hooks:
       - id: isort
         require_serial: true
+
+  - repo: https://github.com/windpioneers/pre-commit-hooks
+    rev: 0.0.5
+    hooks:
+      - id: check-branch-name
+        args:
+          - '^master$'
+          - '^development$'
+          - '^staging$'
+          - '^develop/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^devops/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^doc/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^feature/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^fix/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^hotfix/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^learning/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
+          - '^review/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
