@@ -322,9 +322,6 @@ AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
 KOMBU_FERNET_KEY = env.str("KOMBU_FERNET_KEY")
 os.environ["KOMBU_FERNET_KEY"] = KOMBU_FERNET_KEY
 
-for character in KOMBU_FERNET_KEY:
-    print(character)
-
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_SERIALIZER = "json"
