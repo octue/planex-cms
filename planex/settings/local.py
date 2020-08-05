@@ -6,7 +6,7 @@ from .base import *  # noqa: F403
 
 # APP CONFIGURATION
 
-DEBUG = False  # env.bool("DJANGO_DEBUG", default=True)
+DEBUG = env.bool("DJANGO_DEBUG", default=True)
 TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 
 # Note: This key only used for development
