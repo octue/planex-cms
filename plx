@@ -5,7 +5,7 @@ Use `plx --help` to see usage instructions
 To make this cli available as an executable on your path, follow this guide:
 https://dbader.org/blog/how-to-make-command-line-commands-with-python
 """
-from os import name, system
+from os import system
 import click
 
 
@@ -39,27 +39,6 @@ def dev():
     system("docker-compose up")
 
 
-# TODO combine install and lock commands using an option, eg install --create-lock wipes and recreates the package lock
-@click.command(context_settings={"ignore_unknown_options": True})
-@click.argument("args", nargs=-1)
-def install(args):
-    """ Runs npm install in the node container
-    """
-    system(f"docker-compose run node npm install {' '.join(args)}")
-
-
-@click.command()
-def lock():
-    """ Recreates package-lock.json file recording the exact freeze of the installation in plx_node container.
-    This is critical following any change to the package.json file, since the lock file tightens exact
-    versions of packages.
-    """
-    if name == "nt":
-        system("del -f package-lock.json && docker-compose run node npm install --package-lock-only")
-    else:
-        system("rm -f package-lock.json && docker-compose run node npm install --package-lock-only")
-
-
 @click.command()
 @click.argument("args", nargs=-1)
 def manage(args):
@@ -67,6 +46,25 @@ def manage(args):
     """
     arg_string = " ".join(args)
     system(f"docker-compose run web python manage.py {arg_string}")
+
+
+@click.command()
+@click.option(
+    "--with-volumes",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Purge all volumes related to planex-cms containers (postgres, pgadmin, etc). HIGHLY DESTRUCTIVE.",
+)
+def prune(with_volumes):
+    """ Find and destroy all windquest containers, optionally removing their persistent volumes
+
+    See https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes#a-docker-cheat-sheet
+
+    """
+    volume_flag = "-v" if with_volumes else ""
+    # Flake8 has to be ignored because grep's escape characters are valid but flake thinks it's python
+    system("docker ps -a | grep 'plx_\|planex_' | awk '{print $1}' | xargs docker rm %s" % volume_flag)  # noqa:W605
 
 
 @click.command()
@@ -89,9 +87,8 @@ def test(args):
 
 cli.add_command(build)
 cli.add_command(dev)
-cli.add_command(install)
-cli.add_command(lock)
 cli.add_command(manage)
+cli.add_command(prune)
 cli.add_command(stop)
 cli.add_command(test)
 
