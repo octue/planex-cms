@@ -31,7 +31,7 @@ plx manage createcachetable
 plx manage migrate
 plx manage collectstatic
 plx manage createsuperuser
-plx manage init_cms --user <the superuser email you just created>
+plx manage "init_cms --user <the superuser email you just created>"
 plx dev
 ```
 
