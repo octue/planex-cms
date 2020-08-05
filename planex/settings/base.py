@@ -341,6 +341,7 @@ BASE_URL = "https://www.octue.com"
 GRAPHENE = {"SCHEMA": "grapple.schema.schema"}
 GRAPPLE_APPS = {"cms_core": "", "cms_site": ""}
 GRAPPLE_ADD_SEARCH_HIT = True
+SHOULD_EXPOSE_GRAPHIQL = True
 
 # Previews
 #  Wagtail previews are served from the frontend site, this URL is where they are directed to
