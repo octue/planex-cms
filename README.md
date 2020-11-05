@@ -7,7 +7,11 @@ planex-cms: A capable headless CMS based on Wagtail
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/octue/planex-cms)
 
-This project is the backend CMS for [www.octue.com](https://www.octue.com). The [Front-end](https://github.com/octue/planex/) is built with Gatsby and consumes the CMS's content via GraphQL.
+This project is the backend CMS for [www.octue.com](https://www.octue.com). 
+
+**PROJECT STATUS**
+
+The next job is to refactor the existing Material-UI based page system for [octue.com](www.octue.com) out of its current private repo and into [the planex repo](https://github.com/octue/planex/), to consume content from `planex-cms` via `GraphQL`, then automate build/deploy with Gatsby.
 
 Quick-start
 -----------
