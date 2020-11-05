@@ -1,9 +1,8 @@
 import logging
 import os
+import sys
 import environ
 from corsheaders.defaults import default_headers
-
-import sys
 
 
 logger = logging.getLogger(__name__)

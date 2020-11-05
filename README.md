@@ -7,7 +7,7 @@ planex-cms: A capable headless CMS based on Wagtail
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/octue/planex-cms)
 
-This project is the backend CMS for [www.octue.com](https://www.octue.com). 
+This project is the backend CMS for [www.octue.com](https://www.octue.com).
 
 **PROJECT STATUS**
 

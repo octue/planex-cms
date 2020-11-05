@@ -48,7 +48,6 @@ urlpatterns += [
     path("", include(crm_urls)),
     path("", include(grapple_urls)),
     path("", include(wagtailadmin_urls)),
-    # path("", lambda request : redirect("/admin/cms/", permanent=True)),  # Redirect homepage to the wagtail admin
 ]
 
 
