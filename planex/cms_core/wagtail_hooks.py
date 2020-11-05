@@ -2,6 +2,7 @@ from django.core.files.storage import get_storage_class
 from django.shortcuts import redirect
 from django.utils.cache import add_never_cache_headers
 from storages.backends.s3boto3 import S3Boto3Storage
+from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 from wagtail.documents import get_document_model
 from wagtail.documents.models import document_served
@@ -27,3 +28,8 @@ def serve_document_from_s3(document, request):
     del response["Cache-control"]
     add_never_cache_headers(response)
     return response
+
+
+@hooks.register("construct_main_menu")
+def add_graphiql_menu_item(request, menu_items):
+    menu_items.append(MenuItem("GraphIQL API", "/graphiql", name="graphiql", classnames="icon icon-code"))
