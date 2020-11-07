@@ -40,7 +40,6 @@ repos:
       - id: check-branch-name
         args:
           - '^main$'
-          - '^master$'
           - '^development$'
           - '^staging$'
           - '^develop/([a-z][a-z0-9]*)(-[a-z0-9]+)*$'
