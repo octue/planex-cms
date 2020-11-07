@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from wagtail.core.models import Page, Site
 
-from cms_site.models import SitePage
+from cms_site.models import SectionsPage
 
 
 logger = logging.getLogger(__name__)
@@ -60,18 +60,18 @@ class Command(BaseCommand):
         revision.publish()
 
         # Make a new Home Page
-        home_page = SitePage(title="Octue Home", slug="home", show_in_menus=True, owner=admin_user)
+        home_page = SectionsPage(title="Octue Home", slug="home", show_in_menus=True, owner=admin_user)
         root_page.add_child(instance=home_page)
         revision = home_page.save_revision()
         revision.publish()
 
         # Create other (non-root) pages as children of the home page
         pages = [
-            SitePage(title="About", slug="about", show_in_menus=True, owner=admin_user),
+            SectionsPage(title="About", slug="about", show_in_menus=True, owner=admin_user),
             # BlogPage(title='Blog', slug='blog', show_in_menus=True, owner=admin_user),
-            SitePage(title="Contact", slug="contact", show_in_menus=True, owner=admin_user),
+            SectionsPage(title="Contact", slug="contact", show_in_menus=True, owner=admin_user),
             # BlogPage(title="Press and announcements", slug='press', show_in_menus=True, owner=admin_user),
-            SitePage(title="Terms and conditions", slug="terms", show_in_menus=True, owner=admin_user),
+            SectionsPage(title="Terms and conditions", slug="terms", show_in_menus=True, owner=admin_user),
         ]
 
         # Add as children to the root (Home) page, and publish

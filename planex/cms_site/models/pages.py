@@ -25,7 +25,7 @@ class PageSectionsOrderable(Orderable):
     """ This through-model allows us to select and reorder one or more Sections from the *Section snippets
     """
 
-    page = ParentalKey("cms_site.SitePage", on_delete=CASCADE, related_name="sections")
+    page = ParentalKey("cms_site.SectionsPage", on_delete=CASCADE, related_name="sections")
     section = ForeignKey("cms_site.Section", on_delete=CASCADE, related_name="pages")
 
     panels = [
@@ -35,8 +35,8 @@ class PageSectionsOrderable(Orderable):
     graphql_fields = [GraphQLInt("page_id"), GraphQLInt("section_id"), GraphQLForeignKey("section", "cms_site.Section")]
 
 
-class SitePage(Page):
-    """ SitePage is used to manage SEO data and general website content including hero banners
+class SectionsPage(Page):
+    """ SectionsPage is used to manage content divided into multiple sections e.g. hero banners
     """
 
     subtitle_text = TextField(
@@ -92,7 +92,7 @@ class SitePage(Page):
     ]
 
     subpage_types = [
-        "SitePage",
+        "SectionsPage",
     ]
 
     @property
